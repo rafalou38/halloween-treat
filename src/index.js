@@ -7,11 +7,14 @@ import { addPoints, getLead, getPoints } from "./db.js";
 const delaiMin = 1;
 const delaiMax = 5;
 const delaiReponse = 1;
-const guildID = "766934509966458892";
+const guildID = "1031590780139225138";
 const treatChannels = [
-  "1005823197171699742",
-  "1036332289564606524",
-  "1036332308472533065",
+  "1035306372167901264",
+	  "1031590780952924201",
+	  "1031595803623563314",
+	  "1031590780952924202",
+	  "1037004571601555576",
+	  "1031596283661656064",
 ];
 const emojis = [
   "🧙",
@@ -70,13 +73,14 @@ async function sendTreat(guild) {
     }
   } catch (error) {
     console.log("\t Un bonbon a été perdu 🕸️");
-    await channel.send("Un bonbon a été perdu 🕸️");
+    const lostMsg = await channel.send("Un bonbon a été perdu 🕸️");
+  setTimeout(async ()=>{await lostMsg.delete()}, 1000*60*2)
   }
   treatMessage.delete();
 
   const delayMinutes = delaiMin + Math.random() * (delaiMax - delaiMin);
   console.log("Sending next treat in", Math.round(delayMinutes), "m");
-  setTimeout(sendTreat, 1000 * 60 * delayMinutes);
+  setTimeout(sendTreat.bind(this, guild), 1000 * 60 * delayMinutes);
 }
 
 client.once("ready", async () => {
